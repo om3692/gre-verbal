@@ -1,0 +1,58 @@
+/* src/components/HintButton.css */
+.hint-button {
+    background-color: var(--secondary-color); /* An attention-grabbing but not primary action color */
+    color: var(--neutral-dark, #333); /* Ensuring good contrast with secondary color */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px; /* Pill shape */
+    cursor: pointer;
+    display: inline-flex; /* Align icon and text nicely */
+    align-items: center;
+    font-size: 0.95em;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  }
+  
+  .hint-button:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+  }
+  .hint-button:active:not(:disabled) {
+      transform: translateY(0px);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  
+  .hint-button:disabled {
+    background-color: var(--neutral-medium);
+    color: var(--neutral-dark);
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  
+  .hint-icon {
+    margin-right: 8px;
+    font-size: 1.2em; /* Make icon slightly larger */
+  }
+  
+  .hint-text {
+    margin-right: 5px;
+  }
+  
+  .hint-cost {
+    font-size: 0.8em;
+    opacity: 0.9;
+    margin-left: 5px;
+    font-weight: 500;
+  }
+  
+  .hints-remaining-count {
+      font-size: 0.8em;
+      opacity: 0.9;
+      margin-left: 5px;
+      background-color: rgba(0,0,0,0.1);
+      padding: 2px 6px;
+      border-radius: 8px;
+  }

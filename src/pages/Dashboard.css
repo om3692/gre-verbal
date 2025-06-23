@@ -1,0 +1,189 @@
+/* src/pages/Dashboard.css */
+.dashboard-page {
+    padding-top: 20px; /* Space below fixed header */
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .dashboard-header h1 {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    margin-bottom: 5px;
+  }
+  .dashboard-header p {
+    font-size: 1.1em;
+    color: var(--neutral-dark);
+  }
+  
+  .dashboard-main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 25px;
+  }
+  
+  .dashboard-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid var(--neutral-light);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-title {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  .card-icon {
+    margin-right: 10px;
+    font-size: 1.2em; /* Adjust icon size relative to title */
+    color: var(--secondary-color);
+  }
+  
+  /* Key Stats Card */
+  .key-stats-card .stat-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--neutral-light);
+  }
+  .key-stats-card .stat-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+  }
+  .key-stats-card .stat-value {
+    font-weight: 600;
+    color: var(--neutral-dark);
+  }
+  .key-stats-card .score-value {
+      color: var(--success-color); /* Highlight score */
+  }
+  
+  .dashboard-progress-bar-container {
+    width: 100%; /* Or a fixed width if needed */
+    margin-top: 5px;
+  }
+  .dashboard-progress-bar-track {
+    height: 18px;
+    background-color: var(--neutral-medium);
+    border-radius: 9px;
+    overflow: hidden;
+  }
+  .dashboard-progress-bar-fill {
+    height: 100%;
+    background-color: var(--success-color);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  
+  /* CTA Card */
+  .cta-card {
+    align-items: center; /* Center buttons */
+    justify-content: center;
+    gap: 15px;
+  }
+  .dashboard-cta {
+    width: 80%;
+    padding: 12px 20px;
+    font-size: 1.05em;
+    text-align: center;
+  }
+  .dashboard-cta.secondary {
+      background-color: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+  }
+  .dashboard-cta.secondary:hover {
+      background-color: var(--primary-color);
+      color: white;
+  }
+  .dashboard-cta.tertiary { /* For practice now button */
+      background-color: var(--secondary-color);
+      color: var(--neutral-dark);
+      border: none;
+  }
+  .dashboard-cta.tertiary:hover {
+      background-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+  }
+  
+  
+  /* Achievements Card */
+  .achievements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .achievement-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 0.95em;
+    border-bottom: 1px dashed var(--neutral-light);
+  }
+  .achievement-item:last-child {
+      border-bottom: none;
+  }
+  .achievement-icon {
+    font-size: 1.5em; /* Make emoji/icon larger */
+    margin-right: 12px;
+    min-width: 30px; /* For alignment */
+    text-align: center;
+  }
+  .achievement-name {
+    font-weight: 500;
+  }
+  .view-all-link {
+      display: block;
+      text-align: right;
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: var(--primary-color);
+      font-weight: bold;
+  }
+  
+  
+  /* Focus Card */
+  .focus-card .focus-area {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+  }
+  .focus-card .focus-reason {
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+  .focus-card {
+      background-color: color-mix(in srgb, var(--secondary-color) 10%, white); /* Light accent background */
+      border-left: 5px solid var(--secondary-color);
+  }
+  
+  
+  @media (max-width: 768px) {
+    .dashboard-main-grid {
+      grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    }
+    .dashboard-header h1 {
+      font-size: 1.8em;
+    }
+     .dashboard-header p {
+      font-size: 1em;
+    }
+  }

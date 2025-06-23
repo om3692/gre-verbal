@@ -1,0 +1,141 @@
+/* src/components/Header.css */
+.app-header {
+    background-color: var(--neutral-dark); /* Or your primary color */
+    color: var(--neutral-light);
+    padding: 10px 0;
+    position: fixed; /* Or sticky, depending on desired behavior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it's above other content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo-link {
+    text-decoration: none;
+    color: var(--neutral-light);
+  }
+  
+  .logo-text {
+    font-family: var(--font-headings);
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  /* .logo-image { height: 40px; } */
+  
+  .main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .main-nav li {
+    margin-left: 20px;
+  }
+  
+  .main-nav a {
+    text-decoration: none;
+    color: var(--neutral-light);
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .main-nav a:hover,
+  .main-nav a.active { /* .active class is automatically added by NavLink */
+    background-color: var(--primary-color); /* Or a highlight color */
+    color: white;
+  }
+  
+  .user-info-header {
+    margin-left: 30px; /* Space it out from nav links */
+    font-size: 0.9em;
+  }
+  
+  .user-info-header span {
+    margin-right: 15px;
+  }
+  
+  /* Mobile Navigation Styles */
+  .mobile-nav-toggle {
+    display: none; /* Hidden by default on larger screens */
+    background: none;
+    border: none;
+    color: var(--neutral-light);
+    font-size: 1.5em; /* Adjust size of hamburger icon */
+    cursor: pointer;
+  }
+  
+  .hamburger-icon { /* Basic hamburger */
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--neutral-light);
+    position: relative;
+    border-radius: 2px;
+  }
+  .hamburger-icon::before,
+  .hamburger-icon::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 3px;
+    background-color: var(--neutral-light);
+    left: 0;
+    border-radius: 2px;
+    transition: transform 0.3s ease, top 0.3s ease;
+  }
+  .hamburger-icon::before { top: -8px; }
+  .hamburger-icon::after { top: 8px; }
+  
+  /* Styling for open mobile navigation if you implement it with 'X' icon */
+  .main-nav.open + .mobile-nav-toggle .hamburger-icon { background-color: transparent; } /* Hide middle bar */
+  .main-nav.open + .mobile-nav-toggle .hamburger-icon::before { transform: rotate(45deg); top: 0; }
+  .main-nav.open + .mobile-nav-toggle .hamburger-icon::after { transform: rotate(-45deg); top: 0; }
+  
+  
+  @media (max-width: 768px) {
+    .main-nav {
+      display: none; /* Hide nav links by default on mobile */
+      flex-direction: column;
+      position: absolute;
+      top: 60px; /* Adjust based on header height */
+      left: 0;
+      width: 100%;
+      background-color: var(--neutral-dark); /* Same as header or slightly different */
+      padding: 10px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  
+    .main-nav.open {
+      display: flex; /* Show when toggled */
+    }
+  
+    .main-nav ul {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .main-nav li {
+      margin: 10px 0;
+      text-align: center;
+    }
+  
+    .user-info-header {
+      margin: 10px 0;
+      text-align: center;
+    }
+  
+    .mobile-nav-toggle {
+      display: block; /* Show hamburger on mobile */
+    }
+  }

@@ -1,0 +1,398 @@
+/* src/pages/Home.css - Interactive Version */
+
+/* Ensure your root variables are defined in index.css
+:root {
+  --primary-color: #4A90E2;
+  --secondary-color: #F5A623;
+  --neutral-dark: #343a40;
+  --text-color: #212529;
+  --background-color: #ffffff;
+  --font-primary: 'Open Sans', sans-serif;
+  --font-headings: 'Montserrat', sans-serif;
+}
+*/
+
+.home-page-interactive {
+  overflow-x: hidden; /* Prevent horizontal scroll from animations */
+}
+
+/* --- Hero Section --- */
+.hero-section-interactive {
+  min-height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  position: relative;
+  color: white;
+  /* BACKGROUND: Choose ONE of these or create your own */
+  /* Option 1: Animated Gradient */
+  background: linear-gradient(-45deg, var(--primary-color), var(--secondary-color), #2c3e50, #3498db);
+  background-size: 400% 400%;
+  animation: gradientBG 25s ease infinite;
+
+  /* Option 2: Static Image with Overlay (replace 'your-image-url.jpg') */
+  /* background-image: url('your-image-url.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed; /* Parallax-like effect */
+}
+
+.hero-overlay { /* Use with static image background */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity */
+  z-index: 1;
+}
+
+.hero-content-interactive {
+  position: relative;
+  z-index: 2;
+  animation: fadeInHeroContent 1s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInHeroContent {
+  to { opacity: 1; }
+}
+
+.hero-title-interactive {
+  font-family: var(--font-headings);
+  font-size: clamp(2.5rem, 6vw, 4.5rem); /* Responsive font size */
+  font-weight: 700;
+  margin-bottom: 0.6em;
+  line-height: 1.1;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-title-interactive span { /* For individual word styling/animation */
+  display: inline-block; /* Allows transform */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: revealText 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+/* Stagger animation for title words */
+.hero-title-interactive span:nth-child(1) { animation-delay: 0.2s; }
+.hero-title-interactive span:nth-child(2) { animation-delay: 0.4s; background: linear-gradient(45deg, var(--secondary-color), #ffcc33); -webkit-background-clip: text; background-clip: text; color: transparent;}
+.hero-title-interactive span:nth-child(3) { animation-delay: 0.6s; }
+
+
+@keyframes revealText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-subtitle-interactive {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  margin-bottom: 2em;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealText 0.8s 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+
+.hero-cta-interactive {
+  background-color: var(--secondary-color);
+  color: var(--neutral-dark, #212529);
+  padding: 18px 40px;
+  font-size: 1.15em;
+  font-weight: bold;
+  font-family: var(--font-headings);
+  border-radius: 50px;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2), 0 0 0 0 rgba(var(--secondary-color-rgb, 245,166,35), 0.7); /* Add --secondary-color-rgb to :root */
+  transition: transform 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000), box-shadow 0.3s ease;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: popInButton 0.6s 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+
+@keyframes popInButton {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-cta-interactive:hover,
+.hero-cta-interactive:focus {
+  background-color: color-mix(in srgb, var(--secondary-color) 90%, black);
+  color: white;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25), 0 0 15px 5px rgba(var(--secondary-color-rgb, 245,166,35), 0.5);
+}
+.hero-cta-interactive:active {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.hero-cta-icon {
+  font-size: 1.3em;
+  transition: transform 0.3s ease;
+}
+.hero-cta-interactive:hover .hero-cta-icon {
+  transform: translateX(8px) rotate(15deg) scale(1.1);
+}
+
+/* Animated Scroll Indicator */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  opacity: 0;
+  animation: fadeInHeroContent 1s 1.8s ease-out forwards; /* Delay its appearance */
+}
+.hero-scroll-indicator span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: white;
+  margin: 6px auto;
+  animation: scrollBounce 1.5s infinite ease-in-out;
+}
+.hero-scroll-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.hero-scroll-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes scrollBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+  40% { transform: translateY(-10px); opacity: 1; }
+}
+
+/* Gradient Background Animation */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+/* --- General Section Styling --- */
+.section-title-interactive {
+  font-family: var(--font-headings);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 600;
+  color: var(--neutral-dark);
+  position: relative;
+  padding-bottom: 15px;
+}
+/* Underline effect for section titles */
+.section-title-interactive::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: var(--secondary-color);
+  border-radius: 2px;
+}
+.section-title-interactive span { /* For highlighting part of the title */
+  color: var(--primary-color);
+}
+
+
+/* --- Value Proposition Section --- */
+.value-prop-section-interactive {
+  padding: 80px 0; /* More vertical padding */
+  background-color: var(--background-color);
+}
+.value-cards-container-interactive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+.value-card-interactive {
+  background-color: white;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+  text-align: center;
+  border: 1px solid #e9ecef;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpFadeIn 0.5s ease-out forwards;
+}
+.value-card-interactive:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(var(--primary-color-rgb, 74,144,226), 0.15); /* Add --primary-color-rgb to :root */
+}
+.value-card-icon-interactive {
+  font-size: 3.5em;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.value-card-interactive:hover .value-card-icon-interactive {
+  transform: rotateY(360deg) scale(1.1);
+  color: var(--secondary-color);
+}
+.value-card-title-interactive {
+  font-family: var(--font-headings);
+  color: var(--neutral-dark);
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.value-card-description-interactive {
+  font-size: 0.95em;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* --- How It Works Section --- */
+.how-it-works-section-interactive {
+  padding: 80px 0;
+  background-color: #f0f4f8; /* Light contrasting background */
+  /* background-image: linear-gradient(to bottom right, #e9f3ff, #f8f0ff); */
+}
+.section-title-interactive.dark-bg-title {
+  color: var(--neutral-dark); /* Keep it dark on light bg or adjust if bg is dark */
+}
+.section-title-interactive.dark-bg-title span {
+  color: var(--secondary-color);
+}
+.steps-container-interactive {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.step-card-interactive {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 420px; /* Max width for each step card */
+  transition: transform 0.3s ease;
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: slideInFromLeft 0.6s ease-out forwards;
+}
+.step-card-interactive:nth-child(even) { /* Alternate animation direction */
+    transform: translateX(30px);
+    animation-name: slideInFromRight;
+}
+.step-card-interactive:hover {
+    transform: scale(1.03);
+}
+.step-number-interactive {
+  background-color: var(--secondary-color);
+  color: var(--neutral-dark, white);
+  font-weight: bold;
+  font-family: var(--font-headings);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3em;
+  margin-right: 20px;
+  flex-shrink: 0; /* Prevent number from shrinking */
+  box-shadow: 0 2px 5px rgba(var(--secondary-color-rgb, 245,166,35), 0.4);
+}
+.step-description-interactive {
+  font-size: 1em;
+  color: var(--text-color);
+  line-height: 1.5;
+  text-align: left;
+}
+
+
+/* --- Final CTA Section --- */
+.final-cta-section-interactive {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: var(--background-color);
+}
+.final-cta-subtitle {
+    font-size: 1.15em;
+    color: #555;
+    max-width: 600px;
+    margin: -20px auto 30px auto;
+    line-height: 1.6;
+}
+.cta-button-interactive.final-cta-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px 35px;
+  font-size: 1.1em;
+  font-weight: 600;
+  border-radius: 30px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb, 74,144,226), 0.3);
+}
+.cta-button-interactive.final-cta-button:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 85%, black);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(var(--primary-color-rgb, 74,144,226), 0.4);
+}
+
+
+/* General Animation Keyframes */
+@keyframes slideUpFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideInFromLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-section-interactive {
+    min-height: auto; /* Adjust hero height */
+    padding: 80px 20px;
+  }
+  .value-cards-container-interactive,
+  .steps-container-interactive {
+    grid-template-columns: 1fr; /* Stack cards */
+  }
+  .step-card-interactive {
+    max-width: 100%; /* Allow step cards to take full width */
+    transform: translateX(0) !important; /* Disable alternating slide for stacked view */
+    animation-name: slideUpFadeIn; /* Use consistent animation when stacked */
+  }
+}

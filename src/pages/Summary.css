@@ -1,0 +1,188 @@
+/* src/pages/Summary.css */
+.summary-page {
+  padding: 30px 15px; /* More padding for the page */
+  text-align: center;
+  opacity: 0;
+  animation: pageFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes pageFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.loading-summary {
+  font-size: 1.6em; /* Larger loading text */
+  color: var(--primary-color);
+  padding: 60px 20px; /* More padding when loading */
+  font-weight: 500;
+}
+
+.summary-header {
+  margin-bottom: 35px; /* More space */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideDownFadeIn 0.7s 0.2s ease-out forwards;
+}
+
+@keyframes slideDownFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.summary-header h1 {
+  font-family: var(--font-headings);
+  color: var(--success-color);
+  font-size: 2.8em; /* Larger title */
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.summary-header p {
+  font-size: 1.25em; /* Slightly larger subtitle */
+  color: var(--neutral-dark, #343a40);
+}
+.summary-header p strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* General card style for review and actions sections for consistency */
+.card-style {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+  margin-bottom: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  /* Apply animation with delay for staggered effect */
+}
+.question-review-section.card-style { animation: fadeInUp 0.6s 0.5s ease-out forwards; }
+.summary-actions.card-style { animation: fadeInUp 0.6s 0.8s ease-out forwards; }
+
+
+.question-review-section h4,
+.actions-title {
+  font-family: var(--font-headings);
+  color: var(--primary-color);
+  margin-bottom: 15px; /* Adjusted margin */
+  font-size: 1.6em; /* Consistent title size */
+  font-weight: 600;
+}
+.question-review-section p {
+    margin-bottom: 20px;
+    font-size: 1.05em;
+    color: var(--neutral-dark);
+}
+
+.review-cta {
+  background-color: var(--secondary-color);
+  color: var(--neutral-dark, white);
+  font-weight: bold;
+}
+.review-cta:hover {
+    background-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+}
+
+
+.action-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adjusted for slightly larger buttons */
+  gap: 18px; /* Increased gap */
+  max-width: 800px;
+  margin: 20px auto 0 auto; /* Add some top margin */
+}
+
+.summary-cta {
+  padding: 14px 20px; /* Slightly larger buttons */
+  font-size: 1.05em;
+  font-weight: 600;
+  border-radius: 25px; /* Pill shape */
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  border: 2px solid transparent; /* For hover effects */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+.summary-cta span { /* For text inside button to allow icon spacing */
+    display: inline-block;
+}
+
+.summary-cta:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+.summary-cta:active {
+  transform: translateY(-1px) scale(1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+.summary-cta.next-level-cta {
+  background-color: var(--success-color);
+  color: white;
+  border-color: color-mix(in srgb, var(--success-color) 80%, black);
+}
+.summary-cta.next-level-cta:hover {
+  background-color: color-mix(in srgb, var(--success-color) 85%, black);
+}
+
+.summary-cta.retry-cta {
+  background-color: var(--secondary-color);
+  color: var(--neutral-dark, white);
+  border-color: color-mix(in srgb, var(--secondary-color) 80%, black);
+}
+.summary-cta.retry-cta:hover {
+  background-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+}
+
+.summary-cta.dashboard-cta {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: color-mix(in srgb, var(--primary-color) 80%, black);
+}
+.summary-cta.dashboard-cta:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 85%, black);
+}
+
+
+/* Animation for buttons appearing */
+.animated-button {
+    opacity: 0;
+    transform: scale(0.9);
+    /* Stagger button animations */
+}
+.summary-cta.next-level-cta.animated-button { animation: popIn 0.4s 1s ease-out forwards; }
+.summary-cta.retry-cta.animated-button { animation: popIn 0.4s 1.15s ease-out forwards; }
+.summary-cta.dashboard-cta.animated-button { animation: popIn 0.4s 1.3s ease-out forwards; }
+
+@keyframes popIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+@media (max-width: 600px) {
+  .summary-header h1 {
+    font-size: 2.2em;
+  }
+  .summary-header p {
+    font-size: 1.1em;
+  }
+  .action-buttons-grid {
+    grid-template-columns: 1fr; /* Stack buttons on small screens */
+  }
+  .stats-grid {
+    grid-template-columns: 1fr; /* Stack stat items */
+  }
+}

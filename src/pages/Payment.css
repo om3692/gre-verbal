@@ -1,0 +1,191 @@
+/* src/pages/Payment.css */
+.payment-page {
+    padding-top: 20px;
+    text-align: center;
+  }
+  
+  .payment-header {
+    margin-bottom: 40px;
+  }
+  .payment-header h1 {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    font-size: 2.2em;
+    margin-bottom: 10px;
+  }
+  .payment-subtitle {
+    font-size: 1.15em;
+    color: var(--neutral-dark);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .premium-features-section {
+    margin-bottom: 40px;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--neutral-light);
+    padding: 20px 30px;
+    border-radius: 8px;
+  }
+  .premium-features-section h2 {
+    font-family: var(--font-headings);
+    color: var(--secondary-color);
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .features-list {
+    list-style: none;
+    padding: 0;
+  }
+  .features-list li {
+    font-size: 1em;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .feature-icon {
+    color: var(--success-color);
+    margin-right: 10px;
+    font-size: 1.2em;
+  }
+  
+  .pricing-plans-section {
+    margin-bottom: 40px;
+  }
+  .pricing-plans-section h2 {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    font-size: 1.8em;
+    margin-bottom: 25px;
+  }
+  
+  .plans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 950px;
+    margin: 0 auto;
+  }
+  
+  .plan-card {
+    background-color: #fff;
+    border: 1px solid var(--neutral-medium);
+    border-radius: 10px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* For popular badge */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .plan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+  
+  .plan-card.popular {
+    border-color: var(--secondary-color);
+    border-width: 2px;
+    box-shadow: 0 6px 20px rgba(var(--secondary-color-rgb, 245,166,35), 0.3); /* Assuming you have --secondary-color-rgb */
+  }
+  
+  .popular-badge {
+    position: absolute;
+    top: -15px; /* Adjust to sit nicely */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--secondary-color);
+    color: var(--neutral-dark, white);
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: bold;
+  }
+  
+  .plan-name {
+    font-family: var(--font-headings);
+    font-size: 1.3em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  .plan-card.popular .plan-name {
+      color: var(--secondary-color);
+  }
+  
+  .plan-price-container {
+      margin-bottom: 5px;
+  }
+  .plan-price {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  .plan-billing-cycle {
+    font-size: 0.9em;
+    color: var(--neutral-dark);
+    margin-left: 5px;
+  }
+  .plan-original-price {
+      font-size: 0.85em;
+      color: var(--error-color);
+      text-decoration: line-through;
+      margin-bottom: 15px;
+  }
+  
+  .plan-features-list {
+    list-style: disc;
+    padding-left: 20px; /* Indent list items */
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    text-align: left;
+    flex-grow: 1; /* Helps align CTAs at bottom if feature lists vary */
+    color: var(--neutral-dark);
+  }
+  .plan-features-list li {
+      margin-bottom: 6px;
+  }
+  
+  .plan-cta {
+    width: 80%;
+    padding: 12px 20px;
+    font-size: 1.05em;
+    margin-top: auto; /* Pushes button to bottom if card heights vary */
+    background-color: var(--success-color);
+  }
+  .plan-card.popular .plan-cta {
+      background-color: var(--secondary-color);
+      color: var(--neutral-dark, white);
+  }
+  .plan-card.popular .plan-cta:hover {
+      background-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+  }
+  
+  
+  .security-trust-section {
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: var(--neutral-dark);
+  }
+  .security-icon {
+    color: var(--success-color);
+    margin-right: 5px;
+  }
+  
+  @media (max-width: 768px) {
+      .payment-header h1 {
+          font-size: 1.8em;
+      }
+      .payment-subtitle {
+          font-size: 1em;
+      }
+      .plans-container {
+          grid-template-columns: 1fr; /* Stack plans */
+      }
+  }

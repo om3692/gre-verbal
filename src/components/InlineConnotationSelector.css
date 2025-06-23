@@ -1,0 +1,58 @@
+/* src/components/InlineConnotationSelector.css */
+.inline-connotation-selector {
+  background-color: var(--neutral-light);
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border: 1px solid var(--neutral-medium);
+}
+
+.inline-connotation-selector.answered {
+  opacity: 0.8; /* Visually indicate it's done */
+}
+
+.selector-question {
+  font-size: 0.95em;
+  color: var(--text-color);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.selector-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.selector-option-button {
+  padding: 8px 15px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  min-width: 90px;
+}
+.selector-option-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* Re-use connotation button colors from ConnotationChallenge.css or global styles */
+.selector-option-button.connotation-positive { background-color: #d1f7c4; border-color: #a3e0b7; color: #004d1a; }
+.selector-option-button.connotation-negative { background-color: #f7c4c4; border-color: #ffa8a8; color: #660000; }
+.selector-option-button.connotation-neutral { background-color: #dde1e3; border-color: #ced4da; color: #3b3f43; }
+
+.selector-option-button.selected {
+  /* Add a stronger visual indication for selection */
+  box-shadow: 0 0 0 2px var(--primary-color) inset;
+  font-weight: bold;
+}
+.selector-option-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.inline-connotation-selector.answered .selector-option-button:not(.selected) {
+    opacity: 0.5; /* Fade out non-selected options once answered */
+}

@@ -1,0 +1,143 @@
+/* src/components/ConnotationChallenge.css */
+.connotation-challenge-overlay {
+    position: fixed; /* Or absolute if Gameplay.jsx is its direct positioned parent */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Above header, below potential modals */
+    padding: 20px;
+  }
+  
+  .connotation-challenge-card {
+    background-color: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    animation: fadeInScaleUp 0.4s ease-out;
+  }
+  
+  @keyframes fadeInScaleUp {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .challenge-title {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.6em;
+  }
+  
+  .challenge-context-sentence {
+    font-size: 1em;
+    color: var(--neutral-dark);
+    margin-bottom: 10px;
+    line-height: 1.5;
+    background-color: var(--neutral-light);
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--neutral-medium);
+  }
+  .challenge-context-sentence em {
+      font-style: normal; /* We're using it for the sentence, not emphasis here */
+  }
+  
+  .highlighted-word {
+    background-color: var(--secondary-color);
+    color: var(--neutral-dark);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+  
+  .challenge-question {
+    font-size: 1.1em;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    font-weight: 500;
+  }
+  
+  .options-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Spacing between buttons */
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  }
+  
+  .connotation-option-button {
+    padding: 12px 20px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    min-width: 100px;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  }
+  
+  .connotation-option-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+  }
+  
+  .connotation-positive { background-color: #d1f7c4; border-color: #a3e0b7; color: #004d1a; }
+  .connotation-negative { background-color: #f7c4c4; border-color: #ffa8a8; color: #660000; }
+  .connotation-neutral { background-color: #dde1e3; border-color: #ced4da; color: #3b3f43; }
+  
+  .connotation-option-button.selected {
+    transform: scale(1.05);
+    /* Specific selected styles if needed before feedback */
+  }
+  .connotation-option-button.correct {
+    background-color: var(--success-color) !important;
+    color: white !important;
+    border-color: color-mix(in srgb, var(--success-color) 80%, black) !important;
+    animation: pulseCorrect 0.5s;
+  }
+  .connotation-option-button.incorrect {
+    background-color: var(--error-color) !important;
+    color: white !important;
+    border-color: color-mix(in srgb, var(--error-color) 80%, black) !important;
+    animation: shakeIncorrect 0.5s;
+  }
+  .connotation-option-button:disabled:not(.correct):not(.incorrect) {
+      opacity: 0.6; /* Fade out non-selected, non-correct/incorrect options */
+      cursor: not-allowed;
+  }
+  
+  
+  @keyframes pulseCorrect {
+    0% { transform: scale(1.05); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1.05); }
+  }
+  @keyframes shakeIncorrect {
+    0%, 100% { transform: translateX(0) scale(1.05); }
+    25% { transform: translateX(-5px) scale(1.05); }
+    75% { transform: translateX(5px) scale(1.05); }
+  }
+  
+  .challenge-feedback {
+    margin-top: 20px;
+    font-size: 1.05em;
+    font-weight: 500;
+  }
+  .challenge-feedback p {
+    margin-bottom: 20px;
+  }
+  
+  .continue-button {
+    /* Uses .cta-button styles from global CSS, can add more here */
+    padding: 12px 30px;
+    font-size: 1.1em;
+  }

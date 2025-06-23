@@ -1,0 +1,47 @@
+/* src/components/ProgressBar.css */
+.progress-bar-container {
+    width: 100%;
+    max-width: 400px; /* Or adjust as needed within the gameplay header */
+    margin: 0 auto; /* Center if it's on its own line on mobile */
+  }
+  
+  .progress-bar-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85em;
+    color: var(--neutral-dark);
+    margin-bottom: 5px;
+    padding: 0 2px; /* Align with bar edges */
+  }
+  
+  .progress-bar-track {
+    width: 100%;
+    height: 12px; /* Adjust height for desired thickness */
+    background-color: var(--neutral-medium);
+    border-radius: 6px; /* Make it rounded */
+    overflow: hidden; /* Ensure fill stays within rounded corners */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .progress-bar-fill {
+    height: 100%;
+    background-color: var(--success-color); /* A positive color for progress */
+    border-radius: 6px; /* Match track's rounding */
+    transition: width 0.5s ease-in-out; /* Smooth animation for progress changes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7em; /* If you want text inside the bar */
+  }
+  
+  /* Optional: If you want a percentage text displayed separately */
+  /*
+  .progress-percentage {
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  */

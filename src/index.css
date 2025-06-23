@@ -1,0 +1,60 @@
+/* src/index.css */
+:root {
+  --primary-color: #4A90E2;
+  --secondary-color: #F5A623;
+  --success-color: #7ED321;
+  --error-color: #D0021B;
+  --neutral-light: #f8f9fa;
+  --neutral-medium: #dee2e6;
+  --neutral-dark: #343a40;
+  --text-color: #212529;
+  --background-color: #ffffff;
+  --font-primary: 'Open Sans', sans-serif;
+  --font-headings: 'Montserrat', sans-serif;
+  --game-bg: #eef2f7; /* Light, focused background for game area */
+  --game-accent: #6C5CE7; /* A vibrant accent for game UI */
+  --primary-color-rgb: 74, 144, 226; /* For rgba() */
+  --secondary-color-rgb: 245, 166, 35; /* For rgba() */
+  --success-color-rgb: 126, 211, 33; /* For rgba() */
+  --error-color-rgb: 208, 2, 27; /* For rgba() */
+}
+  
+  body {
+    margin: 0;
+    font-family: var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+  
+  /* Basic Reset */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Add more global styles, utility classes, etc. */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  /* In App.css or index.css */
+.cta-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: color-mix(in srgb, var(--primary-color) 80%, black); /* Darken primary color */
+  }

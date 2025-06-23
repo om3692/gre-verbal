@@ -1,0 +1,516 @@
+/* src/components/AnswerChoice.css - Enhanced Interactive Version */
+
+.answer-choice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px; /* Slightly more padding */
+  border: 1px solid var(--neutral-medium, #e0e0e0);
+  border-radius: 10px; /* More rounded */
+  background-color: var(--background-color, #fff);
+  margin-bottom: 12px; /* Consistent spacing */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.04); /* Softer, more modern shadow */
+ transition: transform 0.25s ease-out, box-shadow 0.25s ease-out, background-color 0.25s ease-out, border-color 0.25s ease-out,
+              opacity 0.4s ease-out, max-height 0.4s ease-out, padding 0.4s ease-out, margin 0.4s ease-out; /* Add transitions for animation properties */
+  overflow: hidden; /* Important for some animations or child element effects */
+  position: relative; /* For potential pseudo-elements or absolute positioned icons */
+}
+
+/* Hover effect for undecided, non-disabled choices */
+.answer-choice:hover:not(.disabled):not(.kept):not(.eliminated):not(.eliminating) {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 5px 12px rgba(var(--primary-color-rgb, 74,144,226), 0.15); /* Use your primary color RGB */
+  border-color: var(--primary-color);
+}
+
+.choice-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 15px; /* More space */
+  flex-grow: 1;
+  transition: opacity 0.3s ease; /* For fade effect during elimination */
+}
+
+.choice-text {
+  font-size: 1.05em;
+  color: var(--text-color, #212529);
+  line-height: 1.5; /* Better readability */
+  transition: text-decoration 0.3s ease, opacity 0.3s ease;
+}
+
+.connotation-tag {
+  font-size: 0.7em; /* Slightly smaller for subtlety */
+  font-weight: 600; /* Bolder */
+  padding: 3px 8px; /* Adjusted padding */
+  border-radius: 12px; /* Pill shape for tags */
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0; /* Hidden by default, shown by .show-connotation-tag or revealed states */
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Make connotation tags visible when parent has this class (controlled by JS) */
+.answer-choice.show-connotation .connotation-tag,
+.answer-choice.revealed-correct .connotation-tag,
+.answer-choice.revealed-incorrect-keep .connotation-tag,
+.answer-choice.revealed-incorrect-elimination .connotation-tag, /* Show on revealed states too */
+.answer-choice.revealed-correct-elimination .connotation-tag {
+  opacity: 1;
+}
+
+
+.connotation-positive { background-color: #e0f8e3; color: #167a36; border: 1px solid #b6e6c0; }
+.connotation-negative { background-color: #fde0e0; color: #a31919; border: 1px solid #f8c0c0; }
+.connotation-neutral { background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; }
+
+.action-buttons {
+  display: flex;
+  gap: 10px; /* More space */
+  flex-shrink: 0; /* Prevent buttons from shrinking too much */
+}
+
+.action-button {
+  padding: 9px 16px; /* Slightly larger buttons */
+  border: 1px solid transparent;
+  border-radius: 20px; /* Pill shape buttons */
+  cursor: pointer;
+  font-size: 0.85em; /* Adjusted size */
+  font-weight: 600; /* Bolder text */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease-out;
+  min-width: 90px;
+  text-align: center;
+  display: inline-flex; /* For icon alignment if added */
+  align-items: center;
+  justify-content: center;
+}
+.action-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+}
+.action-button:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.keep-button {
+  background-color: var(--neutral-light, #f8f9fa);
+  border: 2px solid var(--success-color);
+  color: var(--success-color);
+}
+.keep-button:hover:not(:disabled) {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.eliminate-button {
+  background-color: var(--neutral-light, #f8f9fa);
+  border: 2px solid var(--error-color);
+  color: var(--error-color);
+}
+.eliminate-button:hover:not(:disabled) {
+  background-color: var(--error-color);
+  color: white;
+}
+
+/* --- STATES --- */
+.answer-choice.kept {
+  background-color: #e6ffed;
+  border-left: 6px solid var(--success-color) !important; /* Stronger indicator */
+  box-shadow: 0 3px 8px rgba(var(--success-color-rgb, 126,211,33), 0.15);
+}
+.answer-choice.kept .keep-button {
+  background-color: var(--success-color);
+  color: white;
+  opacity: 0.8; /* Still interactive if needed to un-keep, but shows selection */
+  box-shadow: none;
+}
+
+/* Animation Trigger Class */
+.answer-choice.eliminating {
+  animation: eliminateAndSettle 0.6s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes eliminateAndSettle {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  40% { /* Point where text fully strikes through and background starts changing */
+    opacity: 0.7;
+    transform: translateX(-10px); /* Slight pull back before "pushing" out */
+    background-color: #fff5f5; /* Start error flash */
+  }
+  60% { /* Text fully faded/struck */
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.6; /* Settle into final opacity */
+    transform: translateX(0); /* Settle back to original x-position */
+    /* background-color is handled by .eliminated class below */
+    /* text-decoration is handled by .eliminated .choice-text */
+  }
+}
+
+/* Final state of an eliminated choice */
+.answer-choice.eliminated {
+  background-color: #ffeef0; /* Slightly different red from hover */
+  border-left: 6px solid var(--error-color) !important; /* Stronger indicator */
+  box-shadow: 0 3px 8px rgba(var(--error-color-rgb, 208,2,27), 0.1);
+  opacity: 0.6; /* Keep it somewhat visible but clearly deprioritized */
+}
+.answer-choice.eliminated .choice-text {
+  opacity: 0.5; /* Faded text */
+  text-decoration: line-through;
+  text-decoration-color: var(--error-color); /* Make strikethrough color match */
+  text-decoration-thickness: 2px;
+}
+.answer-choice.eliminated .eliminate-button {
+  background-color: var(--error-color);
+  color: white;
+  opacity: 0.8;
+  box-shadow: none;
+}
+.answer-choice.eliminated .keep-button { /* Make keep button less prominent if eliminated */
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+.answer-choice.disabled {
+  opacity: 0.7; /* Overall faded */
+  /* background-color: #f9f9f9; */ /* Slightly different background */
+}
+.answer-choice.disabled .action-button {
+  cursor: not-allowed;
+  opacity: 0.4 !important; /* Stronger disabled opacity for buttons */
+  background-color: var(--neutral-medium) !important;
+  color: var(--neutral-dark) !important;
+  border-color: var(--neutral-medium) !important;
+  box-shadow: none;
+}
+
+
+/* --- REVEALED STATES (after final submission) --- */
+/* These styles apply when 'isRevealed' is true */
+.answer-choice.revealed-correct {
+  background-color: var(--success-color) !important;
+  color: white !important;
+  border-color: color-mix(in srgb, var(--success-color) 70%, black) !important;
+  box-shadow: 0 4px 12px rgba(var(--success-color-rgb, 126,211,33), 0.3) !important;
+  opacity: 1 !important;
+}
+.answer-choice.revealed-correct .choice-text,
+.answer-choice.revealed-correct .connotation-tag,
+.answer-choice.revealed-correct .reveal-indicator {
+  color: white !important;
+  background-color: transparent !important;
+  border: none !important;
+  text-decoration: none !important; /* Remove any strikethrough */
+  opacity: 1 !important;
+}
+
+.answer-choice.revealed-incorrect-elimination { /* Correct answer, but user Eliminated it (Mistake) */
+  background-color: #fff0f0 !important;
+  border: 2px dashed var(--error-color) !important;
+  box-shadow: 0 2px 8px rgba(var(--error-color-rgb, 208,2,27), 0.15) !important;
+  opacity: 1 !important; /* Make sure it's fully visible to highlight the mistake */
+}
+.answer-choice.revealed-incorrect-elimination .choice-text {
+  text-decoration: none !important; /* User thought it was wrong, but it's right, so no strikethrough */
+  opacity: 1 !important;
+  color: var(--error-color) !important; /* Highlight the text in error color */
+}
+.answer-choice.revealed-incorrect-elimination .reveal-indicator {
+    color: var(--error-color) !important;
+}
+
+
+.answer-choice.revealed-correct-elimination { /* Incorrect answer, user Eliminated it (Correct PoE!) */
+  background-color: #f0fff0 !important;
+  border-color: var(--success-color) !important;
+  opacity: 0.6 !important; /* It's correctly handled, so can be slightly faded */
+}
+.answer-choice.revealed-correct-elimination .choice-text {
+  text-decoration: line-through !important;
+  opacity: 0.7 !important;
+}
+.answer-choice.revealed-correct-elimination .reveal-indicator {
+    color: var(--success-color) !important;
+}
+
+
+.answer-choice.revealed-incorrect-keep { /* Incorrect answer, user Kept/Selected it (Mistake) */
+  background-color: var(--error-color) !important;
+  color: white !important;
+  border-color: color-mix(in srgb, var(--error-color) 70%, black) !important;
+  box-shadow: 0 4px 12px rgba(var(--error-color-rgb, 208,2,27), 0.3) !important;
+  opacity: 1 !important;
+}
+.answer-choice.revealed-incorrect-keep .choice-text,
+.answer-choice.revealed-incorrect-keep .connotation-tag,
+.answer-choice.revealed-incorrect-keep .reveal-indicator {
+  color: white !important;
+  background-color: transparent !important;
+  border: none !important;
+  text-decoration: none !important;
+  opacity: 1 !important;
+}
+
+
+.reveal-indicator {
+  font-weight: bold;
+  font-size: 0.9em;
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-left: auto; /* Push to the right if actions buttons are hidden */
+  flex-shrink: 0;
+}
+/* Specific colors already applied by parent .revealed-* classes */
+
+
+@media (max-width: 600px) {
+  .answer-choice {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px; /* Adjust padding for stacked view */
+  }
+  .choice-text-wrapper {
+    margin-bottom: 12px; /* More space when stacked */
+    margin-right: 0;
+  }
+  .action-buttons {
+    justify-content: space-between; /* Spread buttons */
+    width: 100%;
+  }
+  .action-button {
+    flex-grow: 1;
+    padding: 10px 12px; /* Ensure tappable */
+  }
+  .reveal-indicator {
+    margin-left: 0; /* Reset margin for stacked view */
+    margin-top: 8px;
+    text-align: center; /* Center reveal indicator text */
+  }
+}
+/* src/components/AnswerChoice.css - Enhanced with Disappearing Animation */
+/* Default margin for spacing, will be animated to 0 on elimination */
+.answer-choice:not(.eliminating):not(.eliminated-final) {
+    margin-bottom: 12px;
+}
+
+
+.answer-choice:hover:not(.disabled):not(.kept):not(.eliminated):not(.eliminating):not(.eliminated-final) {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 5px 12px rgba(var(--primary-color-rgb, 74,144,226), 0.15);
+  border-color: var(--primary-color);
+}
+
+.choice-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 15px;
+  flex-grow: 1;
+  transition: opacity 0.3s ease;
+}
+
+.choice-text {
+  font-size: 1.05em;
+  color: var(--text-color, #212529);
+  line-height: 1.5;
+  transition: text-decoration 0.3s ease, opacity 0.3s ease;
+}
+
+.connotation-tag {
+  font-size: 0.7em;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.answer-choice.show-connotation .connotation-tag,
+.answer-choice.revealed-correct .connotation-tag,
+.answer-choice.revealed-incorrect-keep .connotation-tag,
+.answer-choice.revealed-incorrect-elimination .connotation-tag,
+.answer-choice.revealed-correct-elimination .connotation-tag {
+  opacity: 1;
+}
+
+.connotation-positive { background-color: #e0f8e3; color: #167a36; border: 1px solid #b6e6c0; }
+.connotation-negative { background-color: #fde0e0; color: #a31919; border: 1px solid #f8c0c0; }
+.connotation-neutral { background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; }
+
+.action-buttons { display: flex; gap: 10px; flex-shrink: 0; }
+
+.action-button {
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease-out;
+  min-width: 90px;
+  text-align: center;
+}
+.action-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 3px 7px rgba(0,0,0,0.1); }
+.action-button:active:not(:disabled) { transform: translateY(0px) scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+.keep-button { background-color: var(--neutral-light, #f8f9fa); border: 2px solid var(--success-color); color: var(--success-color); }
+.keep-button:hover:not(:disabled) { background-color: var(--success-color); color: white; }
+
+.eliminate-button { background-color: var(--neutral-light, #f8f9fa); border: 2px solid var(--error-color); color: var(--error-color); }
+.eliminate-button:hover:not(:disabled) { background-color: var(--error-color); color: white; }
+
+/* --- STATES --- */
+.answer-choice.kept {
+  background-color: #e6ffed;
+  border-left: 6px solid var(--success-color) !important;
+  box-shadow: 0 3px 8px rgba(var(--success-color-rgb, 126,211,33), 0.15);
+}
+.answer-choice.kept .keep-button { background-color: var(--success-color); color: white; opacity: 0.8; box-shadow: none; }
+
+/* Animation Trigger Class for DISAPPEARING */
+.answer-choice.eliminating {
+  animation: sweepAndDisappear 0.5s forwards ease-out;
+}
+
+@keyframes sweepAndDisappear {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    max-height: 70px; /* Estimate or set fixed height for choices */
+    padding-top: 15px; /* Original padding */
+    padding-bottom: 15px;
+    margin-bottom: 12px; /* Original margin */
+    border-width: 1px; /* Original border */
+  }
+  50% {
+    opacity: 0.3;
+    transform: translateX(30px) scale(0.95); /* Slide right */
+    background-color: #fff2f2; /* Flash error */
+  }
+  99% { /* Almost at the end, keep it like this before display none */
+    opacity: 0;
+    transform: translateX(60px) scale(0.8);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-width: 0;
+  }
+  100% { /* Make it take no space at all */
+    opacity: 0;
+    transform: translateX(60px) scale(0.8);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-width: 0;
+    /* display: none; --- We won't use display:none here, let JS handle removal if needed,
+                          or rely on max-height:0 and opacity:0 for visual removal */
+  }
+}
+
+/* This class is applied AFTER animation if the element is meant to be hidden PERMANENTLY by JS
+   For now, we just rely on the animation making it invisible and taking no space.
+   If elements are not removed from the DOM, this helps keep them 'gone'. */
+.answer-choice.eliminated-final {
+    opacity: 0;
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    border-width: 0 !important;
+    pointer-events: none; /* Ensure it's not interactive if somehow still targetable */
+    overflow: hidden;
+}
+
+/* IF YOU WANT THE ELIMINATED CHOICE TO STAY BUT BE STYLED AS "eliminated": */
+/* Use this instead of .eliminating animation if you don't want it to disappear */
+/*
+.answer-choice.eliminated {
+  background-color: #ffeef0;
+  border-left: 6px solid var(--error-color) !important;
+  box-shadow: 0 3px 8px rgba(var(--error-color-rgb, 208,2,27), 0.1);
+  opacity: 0.6;
+}
+.answer-choice.eliminated .choice-text {
+  opacity: 0.5;
+  text-decoration: line-through;
+  text-decoration-color: var(--error-color);
+  text-decoration-thickness: 2px;
+}
+.answer-choice.eliminated .eliminate-button { background-color: var(--error-color); color: white; opacity: 0.8; box-shadow: none; }
+.answer-choice.eliminated .keep-button { opacity: 0.5; pointer-events: none; }
+*/
+
+
+.answer-choice.disabled { opacity: 0.7; }
+.answer-choice.disabled .action-button {
+  cursor: not-allowed; opacity: 0.4 !important; background-color: var(--neutral-medium) !important;
+  color: var(--neutral-dark) !important; border-color: var(--neutral-medium) !important; box-shadow: none;
+}
+
+/* --- REVEALED STATES --- (largely same as before, ensure they override animation states if needed) */
+.answer-choice.revealed-correct {
+  opacity: 1 !important; max-height: initial !important; /* Ensure it's visible if it was "eliminated" by mistake */
+  background-color: var(--success-color) !important; color: white !important;
+  border-color: color-mix(in srgb, var(--success-color) 70%, black) !important;
+  box-shadow: 0 4px 12px rgba(var(--success-color-rgb, 126,211,33), 0.3) !important;
+}
+.answer-choice.revealed-correct .choice-text,
+.answer-choice.revealed-correct .connotation-tag,
+.answer-choice.revealed-correct .reveal-indicator {
+  color: white !important; background-color: transparent !important; border: none !important;
+  text-decoration: none !important; opacity: 1 !important;
+}
+
+.answer-choice.revealed-incorrect-elimination { /* Correct answer, user Eliminated */
+  opacity: 1 !important; max-height: initial !important;
+  background-color: #fff0f0 !important; border: 2px dashed var(--error-color) !important;
+  box-shadow: 0 2px 8px rgba(var(--error-color-rgb, 208,2,27), 0.15) !important;
+}
+.answer-choice.revealed-incorrect-elimination .choice-text { text-decoration: none !important; opacity: 1 !important; color: var(--error-color) !important; }
+.answer-choice.revealed-incorrect-elimination .reveal-indicator { color: var(--error-color) !important; }
+
+.answer-choice.revealed-correct-elimination { /* Incorrect, user Eliminated (Good!) - this will be hidden by animation if not removed by JS */
+  opacity: 0 !important; /* Ensure it STAYS gone if correctly eliminated */
+  max-height: 0 !important;
+  padding: 0 !important; margin: 0 !important; border: 0 !important;
+  pointer-events: none;
+}
+
+.answer-choice.revealed-incorrect-keep { /* Incorrect, user Kept */
+  opacity: 1 !important; max-height: initial !important;
+  background-color: var(--error-color) !important; color: white !important;
+  border-color: color-mix(in srgb, var(--error-color) 70%, black) !important;
+  box-shadow: 0 4px 12px rgba(var(--error-color-rgb, 208,2,27), 0.3) !important;
+}
+.answer-choice.revealed-incorrect-keep .choice-text,
+.answer-choice.revealed-incorrect-keep .connotation-tag,
+.answer-choice.revealed-incorrect-keep .reveal-indicator {
+  color: white !important; background-color: transparent !important; border: none !important;
+  text-decoration: none !important; opacity: 1 !important;
+}
+
+.reveal-indicator { font-weight: bold; font-size: 0.9em; padding: 3px 6px; border-radius: 4px; margin-left: auto; flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .answer-choice { flex-direction: column; align-items: stretch; padding: 12px; }
+  .choice-text-wrapper { margin-bottom: 12px; margin-right: 0; }
+  .action-buttons { justify-content: space-between; width: 100%; }
+  .action-button { flex-grow: 1; padding: 10px 12px; }
+  .reveal-indicator { margin-left: 0; margin-top: 8px; text-align: center; }
+}
